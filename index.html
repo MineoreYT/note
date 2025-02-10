@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Envelope</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: pink;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+        }
+        .envelope {
+            width: 200px;
+            height: 120px;
+            background: red;
+            position: relative;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .flap {
+            width: 200px;
+            height: 60px;
+            background: darkred;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            transform-origin: top;
+            transition: transform 0.5s ease-in-out;
+        }
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+        .note {
+            width: 180px;
+            height: 100px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            position: absolute;
+            bottom: 0;
+            transform: translateY(100%);
+            transition: transform 1s ease-in-out 0.5s, opacity 1s ease-in-out 1s;
+            opacity: 0;
+        }
+        .envelope.open .note {
+            transform: translateY(-50px);
+            opacity: 1;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            opacity: 0;
+            animation: floatHeart 2s ease-in-out infinite;
+        }
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50px) scale(1.2);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="envelope" onclick="openEnvelope()">
+            <div class="flap"></div>
+            <div class="note" id="note">Happy Valentine's, Chimie! ❤️</div>
+        </div>
+    </div>
+
+    <script>
+        function openEnvelope() {
+            let envelope = document.querySelector(".envelope");
+            envelope.classList.toggle("open");
+            createHeart();
+        }
+        
+        function createHeart() {
+            let heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
+        }
+    </script>
+</body>
+</html>
